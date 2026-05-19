@@ -20,4 +20,12 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/nieuws', [NewsItemController::class, 'index'])->name('nieuws.index');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/nieuws/create', [NewsItemController::class, 'create'])->name('nieuws.create');
+    Route::post('/nieuws', [NewsItemController::class, 'store'])->name('nieuws.store');
+});
+
+Route::get('/nieuws/{newsItem}', [NewsItemController::class, 'show'])->name('nieuws.show');
+
 require __DIR__.'/auth.php';
