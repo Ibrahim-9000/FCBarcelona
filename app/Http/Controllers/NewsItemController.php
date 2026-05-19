@@ -41,4 +41,25 @@ class NewsItemController extends Controller
 
         return redirect()->route('nieuws.index')->with('success', 'Nieuwsbericht aangemaakt!');
     }
+    public function edit(NewsItem $newsItem)
+{
+    return view('nieuws.edit', compact('newsItem'));
+}
+
+public function update(Request $request, NewsItem $newsItem)
+{
+    $validated = $request->validate([
+        'title' => 'required|string|max:255',
+        'body' => 'required|string',
+        'image' => 'nullable|image|max:2048',
+    ]);
+
+    if ($request->hasFile('image')) {
+        $validated['image'] = $request->file('image')->store('nieuws', 'public');
+    }
+
+    $newsItem->update($validated);
+
+    return redirect()->route('nieuws.show', $newsItem)->with('success', 'Nieuwsbericht aangepast!');
+}
 }
