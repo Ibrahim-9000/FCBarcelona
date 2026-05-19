@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\NewsItemController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,4 +19,5 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [App\Http\Controllers\Userzone\ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/nieuws', [NewsItemController::class, 'index'])->name('nieuws.index');
 require __DIR__.'/auth.php';
