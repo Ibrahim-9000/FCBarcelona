@@ -12,4 +12,9 @@ class NewsItemController extends Controller
         $newsItems = NewsItem::latest()->get();
         return view('nieuws.index', compact('newsItems'));
     }
+
+    public function show(NewsItem $newsItem)
+    {
+        return view('nieuws.show', compact('newsItem'));
+    }
 }
