@@ -18,9 +18,26 @@
 
                 <p>{{ $newsItem->body }}</p>
 
-                <a href="{{ route('nieuws.index') }}" class="mt-6 inline-block text-blue-600 hover:underline">
-                    ← Terug naar nieuws
-                </a>
+                <div class="mt-6 flex gap-4">
+                    <a href="{{ route('nieuws.index') }}" class="text-blue-600 hover:underline">
+                        ← Terug naar nieuws
+                    </a>
+
+                    @auth
+                        <a href="{{ route('nieuws.edit', $newsItem) }}" class="text-yellow-600 hover:underline">
+                             Bewerken
+                        </a>
+
+                        <form action="{{ route('nieuws.destroy', $newsItem) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-red-600 hover:underline"
+                                onclick="return confirm('Ben je zeker dat je dit wil verwijderen?')">
+                                Verwijderen
+                            </button>
+                        </form>
+                    @endauth
+                </div>
 
             </div>
         </div>
