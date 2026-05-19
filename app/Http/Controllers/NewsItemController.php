@@ -17,4 +17,28 @@ class NewsItemController extends Controller
     {
         return view('nieuws.show', compact('newsItem'));
     }
+
+    public function create()
+    {
+        return view('nieuws.create');
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'body' => 'required|string',
+            'image' => 'nullable|image|max:2048',
+        ]);
+
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request->file('image')->store('nieuws', 'public');
+        }
+
+        $validated['user_id'] = auth()->id();
+
+        NewsItem::create($validated);
+
+        return redirect()->route('nieuws.index')->with('success', 'Nieuwsbericht aangemaakt!');
+    }
 }
