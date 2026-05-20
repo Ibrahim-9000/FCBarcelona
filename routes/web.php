@@ -28,6 +28,21 @@ Route::middleware('auth')->group(function () {
     Route::delete('/nieuws/{newsItem}', [NewsItemController::class, 'destroy'])->name('nieuws.destroy');
 });
 
+
+Route::get('/faq', [App\Http\Controllers\FaqCategoryController::class, 'index'])->name('faq.index');
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/faq/create', [App\Http\Controllers\FaqCategoryController::class, 'create'])->name('faq.create');
+    Route::post('/faq', [App\Http\Controllers\FaqCategoryController::class, 'store'])->name('faq.store');
+    Route::get('/faq/{faqCategory}/edit', [App\Http\Controllers\FaqCategoryController::class, 'edit'])->name('faq.edit');
+    Route::patch('/faq/{faqCategory}', [App\Http\Controllers\FaqCategoryController::class, 'update'])->name('faq.update');
+    Route::delete('/faq/{faqCategory}', [App\Http\Controllers\FaqCategoryController::class, 'destroy'])->name('faq.destroy');
+
+    Route::post('/faq/{faqCategory}/items', [App\Http\Controllers\FaqItemController::class, 'store'])->name('faq.items.store');
+    Route::delete('/faq/items/{faqItem}', [App\Http\Controllers\FaqItemController::class, 'destroy'])->name('faq.items.destroy');
+});
+
 Route::get('/nieuws/{newsItem}', [NewsItemController::class, 'show'])->name('nieuws.show');
 
 Route::get('/profile/{user}', [ProfileController::class, 'show'])->name('profile.show');
