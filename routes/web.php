@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsItemController;
 use App\Http\Controllers\Userzone\ProfileController;
+use App\Http\Controllers\ContactController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -46,5 +47,8 @@ Route::middleware('auth')->group(function () {
 Route::get('/nieuws/{newsItem}', [NewsItemController::class, 'show'])->name('nieuws.show');
 
 Route::get('/profile/{user}', [ProfileController::class, 'show'])->name('profile.show');
+
+Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 require __DIR__.'/auth.php';
