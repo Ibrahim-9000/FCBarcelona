@@ -20,8 +20,9 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/nieuws', [NewsItemController::class, 'index'])->name('nieuws.index');
+Route::get('/nieuws/{newsItem}', [NewsItemController::class, 'show'])->name('nieuws.show');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::get('/nieuws/create', [NewsItemController::class, 'create'])->name('nieuws.create');
     Route::post('/nieuws', [NewsItemController::class, 'store'])->name('nieuws.store');
     Route::get('/nieuws/{newsItem}/edit', [NewsItemController::class, 'edit'])->name('nieuws.edit');
@@ -29,11 +30,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/nieuws/{newsItem}', [NewsItemController::class, 'destroy'])->name('nieuws.destroy');
 });
 
-
 Route::get('/faq', [App\Http\Controllers\FaqCategoryController::class, 'index'])->name('faq.index');
 
-
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::get('/faq/create', [App\Http\Controllers\FaqCategoryController::class, 'create'])->name('faq.create');
     Route::post('/faq', [App\Http\Controllers\FaqCategoryController::class, 'store'])->name('faq.store');
     Route::get('/faq/{faqCategory}/edit', [App\Http\Controllers\FaqCategoryController::class, 'edit'])->name('faq.edit');
@@ -43,8 +42,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/faq/{faqCategory}/items', [App\Http\Controllers\FaqItemController::class, 'store'])->name('faq.items.store');
     Route::delete('/faq/items/{faqItem}', [App\Http\Controllers\FaqItemController::class, 'destroy'])->name('faq.items.destroy');
 });
-
-Route::get('/nieuws/{newsItem}', [NewsItemController::class, 'show'])->name('nieuws.show');
 
 Route::get('/profile/{user}', [ProfileController::class, 'show'])->name('profile.show');
 
