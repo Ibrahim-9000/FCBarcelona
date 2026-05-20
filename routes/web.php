@@ -20,7 +20,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/nieuws', [NewsItemController::class, 'index'])->name('nieuws.index');
-Route::get('/nieuws/{newsItem}', [NewsItemController::class, 'show'])->name('nieuws.show');
 
 Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::get('/nieuws/create', [NewsItemController::class, 'create'])->name('nieuws.create');
@@ -29,6 +28,8 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::patch('/nieuws/{newsItem}', [NewsItemController::class, 'update'])->name('nieuws.update');
     Route::delete('/nieuws/{newsItem}', [NewsItemController::class, 'destroy'])->name('nieuws.destroy');
 });
+
+Route::get('/nieuws/{newsItem}', [NewsItemController::class, 'show'])->name('nieuws.show');
 
 Route::get('/faq', [App\Http\Controllers\FaqCategoryController::class, 'index'])->name('faq.index');
 
