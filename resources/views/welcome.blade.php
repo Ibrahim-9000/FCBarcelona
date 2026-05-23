@@ -4,17 +4,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>FC Barcelona Fansite</title>
-    @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @endif
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.15.1/dist/cdn.min.js"></script>
 </head>
 <body class="bg-gray-50 min-h-screen flex flex-col">
 
     {{-- Navigatie --}}
     <nav class="bg-[#004D98] text-white shadow-md">
         <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="/" class="text-xl font-bold tracking-wide text-[#A50044]">
-                FC <span class="text-white">Barcelona</span>
+            <a href="/" class="text-xl font-bold tracking-wide">
+                <span class="text-[#A50044]">FC</span> <span class="text-white">Barcelona</span>
             </a>
 
             <div class="flex items-center gap-6 text-sm font-medium">
@@ -24,6 +23,9 @@
 
                 @auth
                     <a href="{{ route('profile.edit') }}" class="hover:text-[#EDBB00] transition">Profiel</a>
+                    @if(auth()->user()->is_admin)
+                        <a href="{{ route('admin.users.index') }}" class="hover:text-[#EDBB00] transition">Beheer</a>
+                    @endif
                     <form method="POST" action="{{ route('logout') }}" class="inline">
                         @csrf
                         <button type="submit" class="bg-[#A50044] text-white px-4 py-2 rounded hover:bg-[#8a0039] transition text-sm">
