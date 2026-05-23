@@ -55,6 +55,9 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::post('/admin/users', [App\Http\Controllers\Admin\UserController::class, 'store'])->name('admin.users.store');
     Route::patch('/admin/users/{user}/toggle-admin', [App\Http\Controllers\Admin\UserController::class, 'toggleAdmin'])->name('admin.users.toggleAdmin');
     Route::delete('/admin/users/{user}', [App\Http\Controllers\Admin\UserController::class, 'destroy'])->name('admin.users.destroy');
+
+    Route::get('/admin/contact', [App\Http\Controllers\Admin\ContactMessageController::class, 'index'])->name('admin.contact.index');
+    Route::patch('/admin/contact/{message}', [App\Http\Controllers\Admin\ContactMessageController::class, 'markRead'])->name('admin.contact.markRead');
 });
 
 require __DIR__.'/auth.php';
