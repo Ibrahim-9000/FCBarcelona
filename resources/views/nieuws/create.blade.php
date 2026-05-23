@@ -14,20 +14,26 @@
 
                     <div class="mb-4">
                         <label class="block font-semibold mb-1">Titel</label>
-                        <input type="text" name="title" class="w-full border rounded p-2" value="{{ old('title') }}">
+                        <input type="text" name="title" class="w-full border rounded p-2" value="{{ old('title') }}" required minlength="2">
                         @error('title') <p class="text-red-500 text-sm">{{ $message }}</p> @enderror
                     </div>
 
                     <div class="mb-4">
                         <label class="block font-semibold mb-1">Inhoud</label>
-                        <textarea name="body" rows="6" class="w-full border rounded p-2">{{ old('body') }}</textarea>
+                        <textarea name="body" rows="6" class="w-full border rounded p-2" required>{{ old('body') }}</textarea>
                         @error('body') <p class="text-red-500 text-sm">{{ $message }}</p> @enderror
                     </div>
 
                     <div class="mb-4">
                         <label class="block font-semibold mb-1">Afbeelding (optioneel)</label>
-                        <input type="file" name="image" class="w-full border rounded p-2">
+                        <input type="file" name="image" accept="image/*" class="w-full border rounded p-2">
                         @error('image') <p class="text-red-500 text-sm">{{ $message }}</p> @enderror
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block font-semibold mb-1">Publicatiedatum</label>
+                        <input type="datetime-local" name="published_at" class="w-full border rounded p-2" value="{{ old('published_at', now()->format('Y-m-d\TH:i')) }}">
+                        @error('published_at') <p class="text-red-500 text-sm">{{ $message }}</p> @enderror
                     </div>
 
                     <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">

@@ -29,6 +29,7 @@ class NewsItemController extends Controller
             'title' => 'required|string|max:255',
             'body' => 'required|string',
             'image' => 'nullable|image|max:2048',
+            'published_at' => 'nullable|date',
         ]);
 
         if ($request->hasFile('image')) {
@@ -53,6 +54,7 @@ class NewsItemController extends Controller
             'title' => 'required|string|max:255',
             'body' => 'required|string',
             'image' => 'nullable|image|max:2048',
+            'published_at' => 'nullable|date',
         ]);
 
         if ($request->hasFile('image')) {
