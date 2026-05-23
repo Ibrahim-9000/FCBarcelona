@@ -28,12 +28,21 @@
                 <a href="{{ route('contact.create') }}" class="hover:text-[#EDBB00] transition">Contact</a>
 
                 @auth
-                    <a href="{{ route('profile.edit') }}" class="hover:text-[#EDBB00] transition">Profiel</a>
-
                     @if(auth()->user()->is_admin)
                         <a href="{{ route('admin.users.index') }}" class="hover:text-[#EDBB00] transition">Gebruikers</a>
                         <a href="{{ route('admin.contact.index') }}" class="hover:text-[#EDBB00] transition">Berichten</a>
                     @endif
+
+                    <a href="{{ route('profile.edit') }}" class="hover:text-[#EDBB00] transition flex items-center gap-2">
+                        @if(auth()->user()->avatar)
+                            <img src="{{ asset('storage/' . auth()->user()->avatar) }}" class="w-8 h-8 rounded-full object-cover">
+                        @else
+                            <div class="w-8 h-8 rounded-full bg-[#A50044] flex items-center justify-center text-white text-xs font-bold">
+                                {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                            </div>
+                        @endif
+                        {{ auth()->user()->name }}
+                    </a>
 
                     <form method="POST" action="{{ route('logout') }}" class="inline">
                         @csrf
