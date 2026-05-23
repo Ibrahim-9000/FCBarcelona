@@ -14,6 +14,10 @@
                 </div>
             @endif
 
+            <a href="{{ route('admin.users.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 mb-6 inline-block">
+                + Gebruiker toevoegen
+            </a>
+
             <div class="bg-white shadow rounded-lg p-6">
                 <table class="w-full text-left">
                     <thead>
