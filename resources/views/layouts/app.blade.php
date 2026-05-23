@@ -13,7 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.15.1/dist/cdn.min.js"></script>
 </head>
-<body class="font-sans antialiased bg-gray-50">
+<body class="font-sans antialiased bg-gray-50 flex flex-col min-h-screen">
 
     {{-- Navigatie --}}
     <nav class="bg-[#004D98] text-white shadow-md">
@@ -61,12 +61,12 @@
     @endisset
 
     {{-- Page Content --}}
-    <main>
+    <main class="flex-1">
         {{ $slot }}
     </main>
 
     {{-- Footer --}}
-    <footer class="bg-[#004D98] text-gray-400 text-center py-5 text-sm mt-12">
+    <footer class="bg-[#004D98] text-gray-400 text-center py-5 text-sm">
         <p>© {{ date('Y') }} FC Barcelona Fansite — Gemaakt met ❤️ door een echte Barça fan</p>
     </footer>
 
