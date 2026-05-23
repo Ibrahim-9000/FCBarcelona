@@ -31,7 +31,8 @@
                     <a href="{{ route('profile.edit') }}" class="hover:text-[#EDBB00] transition">Profiel</a>
 
                     @if(auth()->user()->is_admin)
-                        <a href="{{ route('admin.users.index') }}" class="hover:text-[#EDBB00] transition">Beheer</a>
+                        <a href="{{ route('admin.users.index') }}" class="hover:text-[#EDBB00] transition">Gebruikers</a>
+                        <a href="{{ route('admin.contact.index') }}" class="hover:text-[#EDBB00] transition">Berichten</a>
                     @endif
 
                     <form method="POST" action="{{ route('logout') }}" class="inline">
