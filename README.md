@@ -1,13 +1,10 @@
 # FC Barcelona Fansite
-
 Een dynamische fansite voor FC Barcelona gebouwd met Laravel 13.
 
 ## Projectbeschrijving
-
 Een volledige Laravel webapplicatie voor FC Barcelona fans. De site bevat een publiek deel met nieuws, FAQ en contact, en een admin deel voor beheer van alle content en gebruikers.
 
 ## Functionaliteiten
-
 - **Login systeem** — registreren, inloggen, uitloggen, wachtwoord resetten, remember me
 - **Gebruikersbeheer** — admins kunnen gebruikers verheffen/afnemen en manueel aanmaken
 - **Profielpagina** — publiek profiel met username, verjaardag, profielfoto en bio
@@ -17,7 +14,6 @@ Een volledige Laravel webapplicatie voor FC Barcelona fans. De site bevat een pu
 - **Admin dashboard** — contactberichten worden opgeslagen in de database en zijn leesbaar/onleesbaar te markeren
 
 ## Technische vereisten
-
 | Vereiste | Implementatie |
 |----------|--------------|
 | Twee layouts | `welcome.blade.php` (startpagina) en `layouts/app.blade.php` (interne paginas) |
@@ -30,13 +26,14 @@ Een volledige Laravel webapplicatie voor FC Barcelona fans. De site bevat een pu
 | Gegroepeerde routes | Routes gegroepeerd per middleware in `web.php` |
 | Eloquent models | `User`, `NewsItem`, `FaqCategory`, `FaqItem`, `ContactMessage` |
 | One-to-many relatie | `FaqCategory` heeft veel `FaqItem`s — `NewsItem` behoort tot `User` |
+| Factories | `NewsItemFactory`, `FaqCategoryFactory`, `FaqItemFactory` met `fake()` data |
 | Migraties en seeders | `php artisan migrate:fresh --seed` maakt alles aan |
 
 ## Installatie
 
 1. Clone de repository
 ```bash
-git clone https://github.com/jouwusername/FCBarcelona.git
+git clone https://github.com/Ibrahim-9000/FCBarcelona.git
 cd FCBarcelona
 ```
 
@@ -69,12 +66,10 @@ php -S 127.0.0.1:8000 -t public
 ```
 
 ## Standaard admin account
-
 - **Email:** admin@ehb.be
 - **Wachtwoord:** Password!321
 
 ## Gebruikte bronnen
-
 - [Laravel documentatie](https://laravel.com/docs)
 - [Tailwind CSS](https://tailwindcss.com)
 - [Mailtrap](https://mailtrap.io)
