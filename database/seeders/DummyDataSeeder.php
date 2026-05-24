@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\NewsItem;
 use App\Models\FaqCategory;
 use App\Models\FaqItem;
+use App\Models\ContactMessage;
 use Illuminate\Database\Seeder;
 
 class DummyDataSeeder extends Seeder
@@ -33,14 +34,16 @@ class DummyDataSeeder extends Seeder
             'is_admin' => false,
         ]);
 
-        // 5 nieuwsberichten via factory
         NewsItem::factory(5)->create();
 
-        // 3 FAQ categorieën elk met 3 vragen via factory
+       
         FaqCategory::factory(3)->create()->each(function ($category) {
             FaqItem::factory(3)->create([
                 'faq_category_id' => $category->id,
             ]);
         });
+
+      
+        ContactMessage::factory(5)->create();
     }
 }
