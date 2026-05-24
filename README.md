@@ -1,89 +1,103 @@
-<p align="center" style="font-size: 24px; margin-bottom: -25px; color: #EF3B2D;">
-    <strong>Educational<br/> Starter Pack<br/></strong><span style="color:gray">for</span>
-</p>
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FC Barcelona Fansite</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.15.1/dist/cdn.min.js"></script>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+    {{-- Navigatie --}}
+    <nav class="bg-[#004D98] text-white shadow-md">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="/" class="text-xl font-bold tracking-wide">
+                <span class="text-[#A50044]">FC</span> <span class="text-white">Barcelona</span>
+            </a>
 
+            <div class="flex items-center gap-6 text-sm font-medium">
+                <a href="{{ route('nieuws.index') }}" class="hover:text-[#EDBB00] transition">Nieuws</a>
+                <a href="{{ route('faq.index') }}" class="hover:text-[#EDBB00] transition">FAQ</a>
+                <a href="{{ route('contact.create') }}" class="hover:text-[#EDBB00] transition">Contact</a>
 
----
+                @auth
+                    @if(auth()->user()->is_admin)
+                        <a href="{{ route('admin.users.index') }}" class="hover:text-[#EDBB00] transition">Gebruikers</a>
+                        <a href="{{ route('admin.contact.index') }}" class="hover:text-[#EDBB00] transition">Berichten</a>
+                    @endif
 
-## About this Starter Pack
-<div style="background-color: #f6f8fa; padding: 10px; border-radius: 5px;">
-This is a starter pack for <strong>Laravel tailored for educational purposes</strong>. 
+                    <a href="{{ route('profile.edit') }}" class="hover:text-[#EDBB00] transition flex items-center gap-2">
+                        @if(auth()->user()->avatar)
+                            <img src="{{ asset('storage/' . auth()->user()->avatar) }}" class="w-8 h-8 rounded-full object-cover">
+                        @else
+                            <div class="w-8 h-8 rounded-full bg-[#A50044] flex items-center justify-center text-white text-xs font-bold">
+                                {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                            </div>
+                        @endif
+                        {{ auth()->user()->name }}
+                    </a>
 
-It is aimed at helping students and beginners to quickly set up a Laravel development environment that allows for 
-learning the basics without the need to configure everything from scratch.
-</div>
+                    <form method="POST" action="{{ route('logout') }}" class="inline">
+                        @csrf
+                        <button type="submit" class="bg-[#A50044] text-white px-4 py-2 rounded hover:bg-[#8a0039] transition text-sm">
+                            Log uit
+                        </button>
+                    </form>
+                @else
+                    <a href="{{ route('login') }}" class="hover:text-[#EDBB00] transition">Log in</a>
+                    <a href="{{ route('register') }}" class="bg-[#A50044] text-white px-4 py-2 rounded hover:bg-[#8a0039] transition">
+                        Registreer
+                    </a>
+                @endauth
+            </div>
+        </div>
+    </nav>
 
-### Changes from the original Laravel repository
-It provides a pre-configured environment with some opinionated settings and packages for the educational context. 
-Initial customisation was done based on Laravel version 12.x. (12.37.0 on November 9th, 2025).
-Updated to Laravel 13.x (13.7 on May 4th, 2026), including now also Laravel Boost.
+    {{-- Hero --}}
+    <div class="bg-[#004D98] text-white py-24 text-center px-6">
+        <p class="text-[#EDBB00] text-sm uppercase tracking-widest mb-3 font-semibold">Welkom op de fansite</p>
+        <h1 class="text-5xl font-bold mb-4">Més que un club</h1>
+        <p class="text-gray-300 text-lg mb-8 max-w-xl mx-auto">
+            Volg het laatste nieuws, stel vragen en neem contact op met onze community.
+        </p>
+        <div class="flex justify-center gap-4 flex-wrap">
+            <a href="{{ route('nieuws.index') }}" class="bg-[#A50044] text-white px-6 py-3 rounded font-semibold hover:bg-[#8a0039] transition">
+                Bekijk Nieuws
+            </a>
+            @guest
+                <a href="{{ route('register') }}" class="border border-white text-white px-6 py-3 rounded font-semibold hover:bg-white hover:text-[#004D98] transition">
+                    Word lid
+                </a>
+            @endguest
+        </div>
+    </div>
 
-- Added **barryvdh/laravel-debugbar** for debug info in the browser
-- Altered **.env.example** for local development (SQLite database, debug mode on, cache and session set to file)
-- Added **roave/security-advisories** to prevent installation of packages with known security issues
-- Added **laravel/boost** for AI assisted code generation
-- Used **laravel/breeze** for authentication scaffolding with Blade templates (but moved all of the component views to a `components.breeze` subfolder for better organization)
-- Replaced vite and related front-end dependencies by **CDN includes of Tailwind CSS and Alpine JS** to keep things simple
-- Replaced PHP Unit by **Pest PHP** for testing, kept basic example tests
-- Some other small tweaks in configuration files, routes, controller, and view organisation to better reflect the educational purpose (rigid structure)
+    {{-- Secties --}}
+    <div class="max-w-6xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-3 gap-6 flex-1">
+        <a href="{{ route('nieuws.index') }}" class="bg-white rounded-lg border border-gray-200 p-8 hover:shadow-md transition text-center group">
+            <div class="text-3xl mb-4">📰</div>
+            <h2 class="text-lg font-bold text-[#004D98] mb-2 group-hover:text-[#A50044] transition">Nieuws</h2>
+            <p class="text-gray-500 text-sm">Blijf op de hoogte van het laatste Barça nieuws.</p>
+        </a>
 
-Everything that follows below (and the shields in the header) are part of the original Laravel README.md file.
+        <a href="{{ route('faq.index') }}" class="bg-white rounded-lg border border-gray-200 p-8 hover:shadow-md transition text-center group">
+            <div class="text-3xl mb-4">❓</div>
+            <h2 class="text-lg font-bold text-[#004D98] mb-2 group-hover:text-[#A50044] transition">FAQ</h2>
+            <p class="text-gray-500 text-sm">Antwoorden op de meest gestelde vragen.</p>
+        </a>
 
----
-## About Laravel
+        <a href="{{ route('contact.create') }}" class="bg-white rounded-lg border border-gray-200 p-8 hover:shadow-md transition text-center group">
+            <div class="text-3xl mb-4">✉️</div>
+            <h2 class="text-lg font-bold text-[#004D98] mb-2 group-hover:text-[#A50044] transition">Contact</h2>
+            <p class="text-gray-500 text-sm">Stuur ons een bericht, we helpen je graag.</p>
+        </a>
+    </div>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+    {{-- Footer --}}
+    <footer class="bg-[#004D98] text-gray-400 text-center py-5 text-sm">
+        <p>© {{ date('Y') }} FC Barcelona Fansite — Gemaakt met ❤️ door een echte Barça fan</p>
+    </footer>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
-```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
-```
-
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+</body>
+</html>
