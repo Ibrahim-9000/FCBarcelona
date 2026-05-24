@@ -1,103 +1,81 @@
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>FC Barcelona Fansite</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.15.1/dist/cdn.min.js"></script>
-</head>
-<body class="bg-gray-50 min-h-screen flex flex-col">
+# FC Barcelona Fansite
 
-    {{-- Navigatie --}}
-    <nav class="bg-[#004D98] text-white shadow-md">
-        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="/" class="text-xl font-bold tracking-wide">
-                <span class="text-[#A50044]">FC</span> <span class="text-white">Barcelona</span>
-            </a>
+Een dynamische fansite voor FC Barcelona gebouwd met Laravel 13.
 
-            <div class="flex items-center gap-6 text-sm font-medium">
-                <a href="{{ route('nieuws.index') }}" class="hover:text-[#EDBB00] transition">Nieuws</a>
-                <a href="{{ route('faq.index') }}" class="hover:text-[#EDBB00] transition">FAQ</a>
-                <a href="{{ route('contact.create') }}" class="hover:text-[#EDBB00] transition">Contact</a>
+## Projectbeschrijving
 
-                @auth
-                    @if(auth()->user()->is_admin)
-                        <a href="{{ route('admin.users.index') }}" class="hover:text-[#EDBB00] transition">Gebruikers</a>
-                        <a href="{{ route('admin.contact.index') }}" class="hover:text-[#EDBB00] transition">Berichten</a>
-                    @endif
+Een volledige Laravel webapplicatie voor FC Barcelona fans. De site bevat een publiek deel met nieuws, FAQ en contact, en een admin deel voor beheer van alle content en gebruikers.
 
-                    <a href="{{ route('profile.edit') }}" class="hover:text-[#EDBB00] transition flex items-center gap-2">
-                        @if(auth()->user()->avatar)
-                            <img src="{{ asset('storage/' . auth()->user()->avatar) }}" class="w-8 h-8 rounded-full object-cover">
-                        @else
-                            <div class="w-8 h-8 rounded-full bg-[#A50044] flex items-center justify-center text-white text-xs font-bold">
-                                {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
-                            </div>
-                        @endif
-                        {{ auth()->user()->name }}
-                    </a>
+## Functionaliteiten
 
-                    <form method="POST" action="{{ route('logout') }}" class="inline">
-                        @csrf
-                        <button type="submit" class="bg-[#A50044] text-white px-4 py-2 rounded hover:bg-[#8a0039] transition text-sm">
-                            Log uit
-                        </button>
-                    </form>
-                @else
-                    <a href="{{ route('login') }}" class="hover:text-[#EDBB00] transition">Log in</a>
-                    <a href="{{ route('register') }}" class="bg-[#A50044] text-white px-4 py-2 rounded hover:bg-[#8a0039] transition">
-                        Registreer
-                    </a>
-                @endauth
-            </div>
-        </div>
-    </nav>
+- **Login systeem** — registreren, inloggen, uitloggen, wachtwoord resetten, remember me
+- **Gebruikersbeheer** — admins kunnen gebruikers verheffen/afnemen en manueel aanmaken
+- **Profielpagina** — publiek profiel met username, verjaardag, profielfoto en bio
+- **Nieuws** — admins kunnen nieuwsitems aanmaken, bewerken en verwijderen. Iedereen kan nieuws lezen.
+- **FAQ** — categorieën en vragen beheerd door admins, zichtbaar voor iedereen
+- **Contactformulier** — bezoekers kunnen een bericht sturen, admin ontvangt email via Mailtrap
+- **Admin dashboard** — contactberichten worden opgeslagen in de database en zijn leesbaar/onleesbaar te markeren
 
-    {{-- Hero --}}
-    <div class="bg-[#004D98] text-white py-24 text-center px-6">
-        <p class="text-[#EDBB00] text-sm uppercase tracking-widest mb-3 font-semibold">Welkom op de fansite</p>
-        <h1 class="text-5xl font-bold mb-4">Més que un club</h1>
-        <p class="text-gray-300 text-lg mb-8 max-w-xl mx-auto">
-            Volg het laatste nieuws, stel vragen en neem contact op met onze community.
-        </p>
-        <div class="flex justify-center gap-4 flex-wrap">
-            <a href="{{ route('nieuws.index') }}" class="bg-[#A50044] text-white px-6 py-3 rounded font-semibold hover:bg-[#8a0039] transition">
-                Bekijk Nieuws
-            </a>
-            @guest
-                <a href="{{ route('register') }}" class="border border-white text-white px-6 py-3 rounded font-semibold hover:bg-white hover:text-[#004D98] transition">
-                    Word lid
-                </a>
-            @endguest
-        </div>
-    </div>
+## Technische vereisten
 
-    {{-- Secties --}}
-    <div class="max-w-6xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-3 gap-6 flex-1">
-        <a href="{{ route('nieuws.index') }}" class="bg-white rounded-lg border border-gray-200 p-8 hover:shadow-md transition text-center group">
-            <div class="text-3xl mb-4">📰</div>
-            <h2 class="text-lg font-bold text-[#004D98] mb-2 group-hover:text-[#A50044] transition">Nieuws</h2>
-            <p class="text-gray-500 text-sm">Blijf op de hoogte van het laatste Barça nieuws.</p>
-        </a>
+| Vereiste | Implementatie |
+|----------|--------------|
+| Twee layouts | `welcome.blade.php` (startpagina) en `layouts/app.blade.php` (interne paginas) |
+| Components | `x-app-layout`, `x-breeze.input-label`, `x-breeze.text-input` |
+| XSS protection | `{{ }}` syntax in alle views |
+| CSRF protection | `@csrf` in alle formulieren |
+| Client-side validation | `required`, `minlength`, `type="email"`, `accept="image/*"` |
+| Routes met controllers | Alle routes gebruiken controller methods |
+| Middleware | `auth` en `is_admin` middleware op beschermde routes |
+| Gegroepeerde routes | Routes gegroepeerd per middleware in `web.php` |
+| Eloquent models | `User`, `NewsItem`, `FaqCategory`, `FaqItem`, `ContactMessage` |
+| One-to-many relatie | `FaqCategory` heeft veel `FaqItem`s — `NewsItem` behoort tot `User` |
+| Migraties en seeders | `php artisan migrate:fresh --seed` maakt alles aan |
 
-        <a href="{{ route('faq.index') }}" class="bg-white rounded-lg border border-gray-200 p-8 hover:shadow-md transition text-center group">
-            <div class="text-3xl mb-4">❓</div>
-            <h2 class="text-lg font-bold text-[#004D98] mb-2 group-hover:text-[#A50044] transition">FAQ</h2>
-            <p class="text-gray-500 text-sm">Antwoorden op de meest gestelde vragen.</p>
-        </a>
+## Installatie
 
-        <a href="{{ route('contact.create') }}" class="bg-white rounded-lg border border-gray-200 p-8 hover:shadow-md transition text-center group">
-            <div class="text-3xl mb-4">✉️</div>
-            <h2 class="text-lg font-bold text-[#004D98] mb-2 group-hover:text-[#A50044] transition">Contact</h2>
-            <p class="text-gray-500 text-sm">Stuur ons een bericht, we helpen je graag.</p>
-        </a>
-    </div>
+1. Clone de repository
+```bash
+git clone https://github.com/jouwusername/FCBarcelona.git
+cd FCBarcelona
+```
 
-    {{-- Footer --}}
-    <footer class="bg-[#004D98] text-gray-400 text-center py-5 text-sm">
-        <p>© {{ date('Y') }} FC Barcelona Fansite — Gemaakt met ❤️ door een echte Barça fan</p>
-    </footer>
+2. Installeer dependencies
+```bash
+composer install
+npm install
+```
 
-</body>
-</html>
+3. Maak `.env` bestand
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+4. Stel database in (SQLite)
+```bash
+DB_CONNECTION=sqlite
+```
+
+5. Migreer en seed de database
+```bash
+php artisan migrate:fresh --seed
+php artisan storage:link
+```
+
+6. Start de server
+```bash
+php -S 127.0.0.1:8000 -t public
+```
+
+## Standaard admin account
+
+- **Email:** admin@ehb.be
+- **Wachtwoord:** Password!321
+
+## Gebruikte bronnen
+
+- [Laravel documentatie](https://laravel.com/docs)
+- [Tailwind CSS](https://tailwindcss.com)
+- [Mailtrap](https://mailtrap.io)
+- AI assistentie via Claude (Anthropic) en ChatGPT
