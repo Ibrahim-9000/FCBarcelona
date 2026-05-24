@@ -78,4 +78,4 @@ php -S 127.0.0.1:8000 -t public
 - [Laravel documentatie](https://laravel.com/docs)
 - [Tailwind CSS](https://tailwindcss.com)
 - [Mailtrap](https://mailtrap.io)
-- AI assistentie via Claude (Anthropic) en ChatGPT
+- AI assistentie via Claude
