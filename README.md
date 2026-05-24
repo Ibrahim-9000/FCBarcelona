@@ -26,7 +26,7 @@ Een volledige Laravel webapplicatie voor FC Barcelona fans. De site bevat een pu
 | Gegroepeerde routes | Routes gegroepeerd per middleware in `web.php` |
 | Eloquent models | `User`, `NewsItem`, `FaqCategory`, `FaqItem`, `ContactMessage` |
 | One-to-many relatie | `FaqCategory` heeft veel `FaqItem`s — `NewsItem` behoort tot `User` |
-| Factories | `NewsItemFactory`, `FaqCategoryFactory`, `FaqItemFactory` met `fake()` data |
+| Factories | `NewsItemFactory`, `FaqCategoryFactory`, `FaqItemFactory`, `ContactMessageFactory` met `fake()` data |
 | Migraties en seeders | `php artisan migrate:fresh --seed` maakt alles aan |
 
 ## Installatie
